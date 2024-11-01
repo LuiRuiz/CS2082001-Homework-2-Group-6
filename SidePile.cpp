@@ -2,20 +2,41 @@
 SidePile::SidePile() {
 	this->top = nullptr;
 	this->size = 0;
-	this->deck = int[MAX];
 }
 
 SidePile::SidePile(int card_1) {
 	this->top = nullptr;
 	this->size = 0;
-	this->push(card_1);
+	try {
+		this->push(card_1);
+
+	}
+	catch (std::invalid_argument e) {
+		return; //idk if i should pass on the error or nah
+	}
+	
 }
 
 SidePile::SidePile(int card_1, int card_2) {
 	this->top = nullptr;
 	this->size = 0;
-	this->push(card_1);
-	this->push(card_2);
+
+	try {
+		this->push(card_1);
+
+	}
+	catch (std::invalid_argument e) {
+		//return; //idk if i should pass on the error or nah
+	}
+
+	try {
+		this->push(card_2);
+
+	}
+	catch (std::invalid_argument e) {
+		//return; //idk if i should pass on the error or nah
+	}
+	
 }
 
 void SidePile::push(int card) {
@@ -35,8 +56,10 @@ int SidePile::getSize() {
 	return this->size;
 }
 
+
 int SidePile::pop() {
-	if (this->top == nullptr) {
+	if (this->size <= 0) {//originally this->top == nullptr no based on size
+		this->top = nullptr;
 		throw std::underflow_error("Side Pile Empty");
 	}
 	int top_card = *this->top;
