@@ -30,6 +30,7 @@ public:
 	*	takes integer argument 1-10 catches error and returns empty
 	*	- sidePile if input is invalid;
 	*/
+	
 	SidePile(int);
 
 	/***
@@ -40,6 +41,10 @@ public:
 	*/
 	SidePile(int,int);
 
+	/***
+	* Initialize SidePile from array input
+	*/
+	SidePile(int*, int);
 	/***
 	* pop():
 	*	returns most recent card in stack (n), 

@@ -28,7 +28,7 @@ void Deck::enqueue(int value) {
 	if (!(1 <= value and value <= 10)) {
 		throw std::invalid_argument("Number must be an integer 1-10");
 	}
-	
+
 	Deck::Card* new_card = new Deck::Card(value);
 	if (!this->head) {
 		this->head = new_card;
@@ -40,28 +40,33 @@ void Deck::enqueue(int value) {
 	this->size += 1;
 }
 
-Deck::Card* Deck::peek(bool pop = false) {
+int Deck::peek(bool pop = false) {
 	if (this->head) {
-		return this->head;
+		return this->head->value;
 	}
-	return nullptr;
+	return 0;
 }
 
-Deck::Card* Deck::pop() {
-	Deck::Card* top = peek(true);
+int Deck::pop() {
+	Deck::Card* top = nullptr;
 
-	if (top == nullptr) {
-		return nullptr;
+	if (!this->head) {
+		throw std::underflow_error("Deck is empty");
 	}
+
+	top = this->head;
 
 	this->head = top->next;
 	top->next = nullptr;
 
-	return top;
+	int card_number = top->value;
+	delete top;
+	size--;
+
+	return card_number;
 
 }
 
 void Deck::printCard(Deck::Card* card) {
 	std::cout << card->value;
 }
-

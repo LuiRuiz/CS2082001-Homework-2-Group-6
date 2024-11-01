@@ -39,6 +39,16 @@ SidePile::SidePile(int card_1, int card_2) {
 	
 }
 
+SidePile::SidePile(int* arr , int arr_size) {
+	this->top = nullptr;
+	this->size = 0;
+
+	for (int i = 0; i < arr_size; i++) {
+		this->push(arr[i]);
+	}
+
+}
+
 void SidePile::push(int card) {
 	if (!(1 <= card and card <= 10)) {
 		throw std::invalid_argument("Card must be between 1-10");
