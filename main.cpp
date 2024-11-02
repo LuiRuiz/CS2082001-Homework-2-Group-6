@@ -400,13 +400,15 @@ void option2() {
 
 
 int main() {
+	srand((unsigned)time(NULL));
+
 	int rounds{ 0 };
-	
+
 	std::cout <<
-		"-------Welcome to War----------\n"<<
-		"Pick pick a play style (1 or 2)\n"<<
-		"1: Play until one participant runs out of cards\n"<< 
-		"2: Play for a fixed number of rounds."<<
+		"-------Welcome to War----------\n" <<
+		"Pick pick a play style (1 or 2)\n" <<
+		"1: Play until one participant runs out of cards\n" <<
+		"2: Play for a fixed number of rounds." <<
 		"The Play with the most cards at the end wins.\n";
 	int style;
 	std::cin >> style;
@@ -421,59 +423,134 @@ int main() {
 		std::cin >> rounds;
 		std::cout << std::endl;
 	}
-	
+
 	std::cout <<
 		"Choose to initialize each deck/side pile (1)\n" <<
-		"Or have a set number of cards per person (2)";
-	
-	int card_type;
-	std::cin >> card_type;
+		"Or have a set number of cards per person (2)\n";
 
-	while (!(card_type == 1 or card_type == 2)) {
-		std::cout << "Please enter 1 or 2:\n";
-		std::cin >> card_type;
+	int mode;
+
+
+	///////Mode Menu////
+	std::cout << "|-------MODE MENU--------|\n";
+	std::cout << "   Press 1 to set values for test case 1 (follow documentation)\n";
+	std::cout << "   Press 2 to set values for test case 2 (follow documentation)\n";
+	std::cout << "   Press 3 to set values for test case 3 (follow documentation)\n";
+	std::cout << "   Press 4 to enter standard mode (7 cards in deck, 3 cards in Pile EACH)\n";
+
+	std::cout << "Enter Value (1-4): ";
+	std::cin >> mode;
+
+
+	Deck player_deck;
+	SidePile player_pile;
+
+	Deck computer_dec;
+	SidePile computer_pile;
+
+
+
+	if (mode == 1) {
+		int arr[3] = { 4,5,6 };
+		int arr2[3] = { 5,6,2 };
+		int pile_arr[2] = { 1,1};
+
+		player_deck = Deck(arr, 3);
+		player_pile = SidePile(pile_arr, 2);
+
+
+
+
+		computer_dec = Deck(arr2, 3);
+		computer_pile = SidePile(pile_arr, 2);
+
+
+
 	}
-	int arr[3] = {1,2,3};
-	int pile_arr[5] = {1,2};
+	else if (mode == 2) {
+		int arr[3] = { 1,6,7 };
+		int arr2[3] = { 5,6,2 };
+		int pile_arr[1] = { 8 };
 
-	Deck player_deck= Deck(arr, 3);
-	SidePile player_pile = SidePile(pile_arr, 2);
 
-	int arr2[3] = {3,4,5};
-	
+		player_deck = Deck(arr, 3);
+		player_pile = SidePile(pile_arr, 1);
 
-	Deck computer_dec = Deck(arr2, 3);
-	SidePile computer_pile = SidePile(pile_arr, 2);
-	
-	if (card_type == 1) {
-		int card;
-		while (true) {
-			std::cout << "Enter Cards for Player deck (valid on range [1,10]. Break with \'-1\'): ";
-			std::cin >> card;
-			if (card == -1) {
-				break;
-			}
-			//player_deck.enqueue(card);
-		}
-		while (true) {
-			std::cout << "Enter Cards for Computer deck (valid on range [1,10]. Break with \'-1\'): ";
-			std::cin >> card;
-			if (card == -1) {
-				break;
-			}
-			//computer_deck.enqueue(card);
-		}
+
+
+
+		computer_dec = Deck(arr2, 3);
+		computer_pile = SidePile(pile_arr, 1);
+
+
+
+	}
+	else if (mode == 3) {
+		int arr[1] = { 1 };
+		int arr2[1] = { 1 };
+		int pile_arr[3] = { 1,2,3};
+
+
+		player_deck = Deck(arr, 1);
+		player_pile = SidePile(pile_arr, 3);
+
+
+
+
+		computer_dec = Deck(arr2, 1);
+		computer_pile = SidePile(pile_arr, 3);
+
+
+
+
+
 	}
 	else {
-		
+		int cards[10] = { 1,2,3,4,5,6,7,8,9,10 };
+		int arr[7];
+		int arr2[7];
+		int side_arr[5];
+		int side_arr2[5];
+
+		for (int i = 0; i < 7; i++) {
+			
+
+			arr[i] = cards[(rand() % 9) + 1];
+
+		}
+		for (int i = 0; i < 7; i++) {
+			arr2[i] = cards[(rand() % 9) + 1];
+
+		}
+
+		for (int i = 0; i < 5; i++) {
+			side_arr[i] = cards[(rand() % 9) + 1];
+
+		}
+		for (int i = 0; i < 5; i++) {
+				side_arr2[i] = cards[(rand() % 9) + 1];
+
+		}
+			std::cout << std::endl;
+
+			player_deck = Deck(arr, 7);
+			player_pile = SidePile(side_arr, 5);
+			computer_dec = Deck(arr2, 7);
+			computer_pile = SidePile(side_arr2, 5);
+
 	}
 
-	if(style == 2){
-		playRounds(rounds, player_deck, player_pile, computer_dec, computer_pile);
-	}
-	else {
-		play(player_deck, player_pile, computer_dec, computer_pile);
-	}
 
-	std::cout << "Thank you for playing!";
+
+
+
+
+		if (style == 2) {
+			playRounds(rounds, player_deck, player_pile, computer_dec, computer_pile);
+		}
+		else {
+			play(player_deck, player_pile, computer_dec, computer_pile);
+		}
+
+		std::cout << "Thank you for playing!";
 }

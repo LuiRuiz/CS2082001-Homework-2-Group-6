@@ -8,7 +8,7 @@ class Deck
 {
 protected:
 	/**
-	individual card hodl
+	individual card that points to next
 	*/
 	struct Card {
 		int value;
@@ -34,23 +34,23 @@ public:
 
 	Params: pop = false. This is helps reduce redundancy in pop function.
 	*/
-	Card* peek(bool);
+	int peek(bool);
 
 	/*
-	Returns and deletes ptr card from front
+	Returns and deletes card from front. Returns card as integer.
 	*/
-	Card* pop();
-	
+	int pop();
+
 	/**
-		Returns current size as int.
+		Returns current deck size as int.
 	*/
 	int getSize();
 
 	/**
-		Changes count by card_count value.
+		Adds card to back of queue
 
 		params:
-			int card_count. Can be negative or positive to function as addCount or subtractCount
+			int card_value. Must be [1,10]
 	*/
 	void enqueue(int);
 };
