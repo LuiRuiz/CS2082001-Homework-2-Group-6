@@ -15,10 +15,11 @@ void takeFromPile(Deck& my_deck, SidePile& my_sidepile) {
 
 
 
-void playRounds(int rounds, Deck& player,
+void playRounds(int my_rounds, Deck& player,
 				SidePile& player_pile, Deck& com, 
 				SidePile& com_pile) 
 {
+	int rounds = my_rounds;
 	int player_wins{ 0 };
 	int com_wins{ 0 };
 	int player_val1{ 0 };
@@ -29,7 +30,7 @@ void playRounds(int rounds, Deck& player,
 	//see if two cards have be played by player
 	bool two_cards_played{ false };
 
-	while ((player.getSize() > 0 || player_pile.getSize() > 0) && (com.getSize() > 0 || com_pile.getSize() > 0) || rounds <=0 ) {
+	while ((player.getSize() > 0 || player_pile.getSize() > 0) && (com.getSize() > 0 || com_pile.getSize() > 0) && rounds >0 ) {
 		std::cout << "------------------------------------------------------------------\n";
 		two_cards_played = false;
 		player_val2 = 0;
@@ -173,11 +174,21 @@ void playRounds(int rounds, Deck& player,
 			com_wins++;
 		}
 
-
+		rounds--;
 	}
 	std::cout << "------------------------------------------------------------------\n";
 
 	/// add comparison to player wins and com_wins
+	std::cout << "Results:\n";
+	std::cout << "Player wins: " << player_wins <<
+		" || Computer wins: " << com_wins << std::endl;
+
+	if (com_wins >= player_wins) {
+		std::cout << "Computer Wins!\n";
+	}
+	else {
+		std::cout << "You Win!\n";
+	}
 
 
 
@@ -365,7 +376,13 @@ void play(Deck& player,
 	std::cout << "------------------------------------------------------------------\n";
 
 
-
+	if (player.getSize() <= 0 && player_pile.getSize() == 0) {
+		std::cout << "Computer Wins! You have run out of cards.\n";
+	}
+	else {
+		std::cout << "You Win! Computer has run out of cards.\n";
+	
+	}
 	
 
 }
@@ -383,9 +400,8 @@ void option2() {
 
 
 int main() {
-
+	int rounds{ 0 };
 	
-
 	std::cout <<
 		"-------Welcome to War----------\n"<<
 		"Pick pick a play style (1 or 2)\n"<<
@@ -399,6 +415,12 @@ int main() {
 		std::cout << "Please enter 1 or 2:\n";
 		std::cin >> style;
 	}
+
+	if (style == 2) {
+		std::cout << "Please enter desired amout of rounds: ";
+		std::cin >> rounds;
+		std::cout << std::endl;
+	}
 	
 	std::cout <<
 		"Choose to initialize each deck/side pile (1)\n" <<
@@ -411,13 +433,18 @@ int main() {
 		std::cout << "Please enter 1 or 2:\n";
 		std::cin >> card_type;
 	}
+	int arr[3] = {1,2,3};
+	int pile_arr[5] = {1,2};
 
-	Deck player_deck;
-	SidePile player_pile;
+	Deck player_deck= Deck(arr, 3);
+	SidePile player_pile = SidePile(pile_arr, 2);
+
+	int arr2[3] = {3,4,5};
 	
-	Deck computer_deck;
-	SidePile computer_pile;
 
+	Deck computer_dec = Deck(arr2, 3);
+	SidePile computer_pile = SidePile(pile_arr, 2);
+	
 	if (card_type == 1) {
 		int card;
 		while (true) {
@@ -426,7 +453,7 @@ int main() {
 			if (card == -1) {
 				break;
 			}
-			player_deck.enqueue(card);
+			//player_deck.enqueue(card);
 		}
 		while (true) {
 			std::cout << "Enter Cards for Computer deck (valid on range [1,10]. Break with \'-1\'): ";
@@ -434,12 +461,19 @@ int main() {
 			if (card == -1) {
 				break;
 			}
-			computer_deck.enqueue(card);
+			//computer_deck.enqueue(card);
 		}
 	}
 	else {
-
+		
 	}
 
-	//play();
+	if(style == 2){
+		playRounds(rounds, player_deck, player_pile, computer_dec, computer_pile);
+	}
+	else {
+		play(player_deck, player_pile, computer_dec, computer_pile);
+	}
+
+	std::cout << "Thank you for playing!";
 }
