@@ -424,9 +424,7 @@ int main() {
 		std::cout << std::endl;
 	}
 
-	std::cout <<
-		"Choose to initialize each deck/side pile (1)\n" <<
-		"Or have a set number of cards per person (2)\n";
+	
 
 	int mode;
 
